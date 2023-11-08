@@ -7,7 +7,6 @@ generator client {
 datasource db {
   provider = "mysql"
   url = env("DATABASE_URL")
-  relationMode = "prisma"
 }
 
 model Link {
@@ -33,6 +32,4 @@ model Log {
   countryCode String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
-  @@index([linkKeyword])
 }
