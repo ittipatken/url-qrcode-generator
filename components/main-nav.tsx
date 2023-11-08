@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { LayoutGrid, List, LogOut, User } from 'lucide-react';
-import { ClerkLoaded, ClerkLoading, SignOutButton } from '@clerk/nextjs';
+import { ClerkLoaded, ClerkLoading, SignOutButton, useClerk } from '@clerk/nextjs';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,8 @@ interface MainNavProps {
 
 const MainNav: React.FC<MainNavProps> = ({ isOpen }) => {
   const pathname = usePathname();
+  const router = useRouter()
+  const { signOut } = useClerk();
 
   const routes = [
     {
@@ -105,6 +107,7 @@ const MainNav: React.FC<MainNavProps> = ({ isOpen }) => {
                     <Button
                       variant='ghost'
                       className='w-full justify-start h-10'
+                      onClick={() => signOut(() => router.push("/sign-in"))}
                     >
                       <span className={cn(isOpen === false ? '' : 'mr-4')}>
                         <LogOut size={18} />
