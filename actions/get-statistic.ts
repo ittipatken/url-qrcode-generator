@@ -62,7 +62,8 @@ export const getStatistic = async (): Promise<StatisticData> => {
   const regionName = new Intl.DisplayNames(['en'], { type: 'region' });
 
   const topCountry =
-    country.length > 0 ? regionName.of(country[0].countryCode) : 'N/A';
+    country.length > 0 ? (country[0].countryCode === 'Unknown' ? 'N/A' : regionName.of(country[0].countryCode)) : 'N/A';
+
 
   return { totalLinks, totalHits, topLink, topCountry };
 };
