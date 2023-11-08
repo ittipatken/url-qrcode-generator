@@ -2,7 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Link as LinkModel } from '@prisma/client';
-import { Copy, Edit, Trash2 } from 'lucide-react';
+import { Copy, Edit, QrCode, Trash2 } from 'lucide-react';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 
 import { useOrigin } from '@/hooks/use-origin';
@@ -17,6 +17,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
+import { QrCodeModal } from '@/components/modal/qrcode-modal';
 
 interface CellActionProps {
   data: LinkModel;
@@ -28,6 +29,9 @@ export function CellAction({ data }: CellActionProps) {
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openQr, setOpenQr] = useState(false);
+
+  const [keyword, setKeyword] = useState('');
 
   const onCopy = (keyword: string) => {
     navigator.clipboard.writeText(`${origin}/${keyword}`);
@@ -37,6 +41,11 @@ export function CellAction({ data }: CellActionProps) {
       description: 'Short URL has been copied.'
     });
   };
+
+  const onShowQRcode = (keyword: string) => {
+    setKeyword(keyword);
+    setOpenQr(true);
+  }
 
   const onDelete = async () => {
     try {
@@ -71,6 +80,9 @@ export function CellAction({ data }: CellActionProps) {
         onConfirm={onDelete}
         loading={loading}
       />
+      <QrCodeModal link={`${origin}/${keyword}`} isOpen={openQr}
+        onClose={() => setOpenQr(false)}
+        loading={loading} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -91,6 +103,10 @@ export function CellAction({ data }: CellActionProps) {
           <DropdownMenuItem onClick={() => onCopy(data.keyword)}>
             <Copy className='mr-2' size={14} />
             Copy
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => onShowQRcode(data.keyword)}>
+            <QrCode className='mr-2' size={14} />
+            QR code
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem className='group' onClick={() => setOpen(true)}>
