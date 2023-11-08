@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/card';
 
 export const metadata: Metadata = {
-  title: 'Short URL Details — URL Shortener'
+  title: 'Short URL Details — Docchula QR code'
 };
 
 const UrlDetailPage = async ({ params }: { params: { linkId: string } }) => {

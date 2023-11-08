@@ -18,20 +18,20 @@ export const metadata: Metadata = {
       ? `https://${process.env.VERCEL_URL}`
       : `http://localhost:${process.env.PORT || 3000}`
   ),
-  title: 'URL Shortener — Custom Short Link & Analytics',
+  title: 'Docchula QR code — Custom Short Link & Analytics',
   description:
-    'URL Shortener is a free tool to shorten URLs and generate short links. URL shortener allow users to create custom keyword shortened link making it easy to share.',
+    'Docchula QR code is a free tool to shorten URLs and generate short links. Docchula QR code allow users to create custom keyword shortened link making it easy to share.',
   openGraph: {
     url: '/',
-    title: 'URL Shortener — Custom Short Link & Analytics',
+    title: 'Docchula QR code — Custom Short Link & Analytics',
     description:
-      'URL Shortener is a free tool to shorten URLs and generate short links. URL shortener allow users to create custom keyword shortened link making it easy to share.'
+      'Docchula QR code is a free tool to shorten URLs and generate short links. Docchula QR code allow users to create custom keyword shortened link making it easy to share.'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'URL Shortener — Custom Short Link & Analytics',
+    title: 'Docchula QR code — Custom Short Link & Analytics',
     description:
-      'URL Shortener is a free tool to shorten URLs and generate short links. URL shortener allow users to create custom keyword shortened link making it easy to share.'
+      'Docchula QR code is a free tool to shorten URLs and generate short links. Docchula QR code allow users to create custom keyword shortened link making it easy to share.'
   }
 };
 

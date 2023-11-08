@@ -4,7 +4,7 @@ import { ClerkLoaded, ClerkLoading, UserProfile } from '@clerk/nextjs';
 import ProfileLoading from '@/components/profile-loading';
 
 export const metadata: Metadata = {
-  title: 'My Profile — URL Shortener'
+  title: 'My Profile — Docchula QR code'
 };
 
 const ProfilePage = () => {

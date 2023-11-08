@@ -14,16 +14,11 @@ export default function AuthLayout({
           <div className='text-left dark:text-primary-foreground'>
             <h1 className='flex justify-start items-center font-bold text-2xl pb-6'>
               <Link className='mr-2 -mt-2' size={40} strokeWidth={3.5} />
-              URL Shortener
+              Docchula QR code
             </h1>
             <h2 className='text-5xl font-extrabold'>
-              Simple and fast URL shortener!
+              Simple and fast Docchula QR code + QR code generator!
             </h2>
-            <p className='text-muted pt-5 font-light'>
-              URL Shortener is a free tool to shorten URLs and generate short
-              links URL shortener allows to create a shortened link making it
-              easy to share.
-            </p>
           </div>
         </div>
       </div>

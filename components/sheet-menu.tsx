@@ -27,7 +27,7 @@ const SheetMenu = () => {
           >
             <Link href='/admin'>
               <LinkIcon className='mr-2 -mt-1' size={28} strokeWidth={3} />
-              <h1 className='font-extrabold text-lg'>URL Shortener</h1>
+              <h1 className='font-extrabold text-lg'>Docchula QR code</h1>
             </Link>
           </Button>
         </SheetHeader>

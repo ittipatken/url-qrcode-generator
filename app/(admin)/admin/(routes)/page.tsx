@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/card';
 
 export const metadata: Metadata = {
-  title: 'Dashboard — URL Shortener'
+  title: 'Dashboard — Docchula QR code'
 };
 
 const DashboardPage = async () => {

@@ -16,7 +16,7 @@ interface UrlPageProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Short URL — URL Shortener'
+  title: 'Short URL — Docchula QR code'
 };
 
 const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
