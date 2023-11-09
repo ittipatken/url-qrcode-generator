@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from 'react';
 
 import { Modal } from '@/components/ui/modal';
@@ -10,7 +8,6 @@ interface QrCodeModalProps {
   link: string;
   isOpen: boolean;
   onClose: () => void;
-  loading: boolean;
 }
 
 export const QrCodeModal: React.FC<QrCodeModalProps> = ({
@@ -18,7 +15,7 @@ export const QrCodeModal: React.FC<QrCodeModalProps> = ({
   isOpen,
   onClose
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -28,7 +25,6 @@ export const QrCodeModal: React.FC<QrCodeModalProps> = ({
     return null;
   }
   const onImageDownload = () => {
-
     const svg = document.getElementById("QRCode");
     if (!svg) {
       console.error("SVG element not found");
@@ -56,6 +52,7 @@ export const QrCodeModal: React.FC<QrCodeModalProps> = ({
     };
     img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
   };
+  
   
   
   return (

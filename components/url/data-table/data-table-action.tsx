@@ -80,9 +80,11 @@ export function CellAction({ data }: CellActionProps) {
         onConfirm={onDelete}
         loading={loading}
       />
-      <QrCodeModal link={`${origin}/${keyword}`} isOpen={openQr}
+      <QrCodeModal
+        link={`${origin}/${keyword}`}
+        isOpen={openQr}
         onClose={() => setOpenQr(false)}
-        loading={loading} />
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
