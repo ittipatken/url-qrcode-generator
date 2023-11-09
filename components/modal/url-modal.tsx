@@ -54,15 +54,15 @@ const UrlModal = () => {
       setLoading(true);
 
       // Get URL title
-      const urlResponse = await axios.get(
-        `https://api.allorigins.win/get?url=${encodeURIComponent(values.url)}`
-      );
-      const matches = urlResponse.data.contents.match(/<title>(.*?)<\/title>/);
-      const title = encodeURI(matches?.[1] ?? values.url);
+      // const urlResponse = await axios.get(
+      //   `https://api.allorigins.win/get?url=${encodeURIComponent(values.url)}`
+      // );
+      // const matches = urlResponse.data.contents.match(/<title>(.*?)<\/title>/);
+      // const title = encodeURI(matches?.[1] ?? values.url);
 
       const response = await axios.post('/api/link', values, {
         headers: {
-          'long-url-title': title
+          'long-url-title': 'title'
         }
       });
 
