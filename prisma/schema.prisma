@@ -5,8 +5,8 @@ generator client {
   provider = "prisma-client-js"
 }
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Link {
@@ -26,8 +26,8 @@ model Log {
   id          String    @id @default(uuid())
   linkKeyword String
   link        Link      @relation("LinkToLog", fields: [linkKeyword], references: [keyword], onDelete: Cascade)
-  referrer    String    @db.Text
-  userAgent   String    @db.Text
+  referrer    String
+  userAgent   String
   ip          String
   countryCode String
   createdAt   DateTime  @default(now())
