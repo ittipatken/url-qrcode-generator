@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import { Link } from '@prisma/client';
 import prismadb from '@/lib/prismadb';
 import { notFound } from 'next/navigation';
@@ -11,9 +11,9 @@ interface StatisticData {
 }
 
 export const getStatistic = async (): Promise<StatisticData> => {
-  const { userId } = auth();
+  const session = await auth();
 
-  if (!userId) {
+  if (!session) {
     notFound();
   }
 
@@ -21,19 +21,19 @@ export const getStatistic = async (): Promise<StatisticData> => {
     [
       prismadb.link.count({
         where: {
-          userId
+          userId: session.user?.id
         }
       }),
       prismadb.log.count({
         where: {
           link: {
-            userId
+            userId: session.user?.id
           }
         }
       }),
       prismadb.link.findFirst({
         where: {
-          userId
+          userId: session.user?.id
         },
         orderBy: {
           click: 'desc'
@@ -44,7 +44,7 @@ export const getStatistic = async (): Promise<StatisticData> => {
         by: ['countryCode'],
         where: {
           link: {
-            userId: userId
+            userId: session.user?.id
           }
         },
         _count: {

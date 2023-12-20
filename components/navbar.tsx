@@ -1,9 +1,7 @@
-import { ClerkLoaded, ClerkLoading, UserButton } from '@clerk/nextjs';
-
+import { signOut } from "@/auth"
 import AddUrl from '@/components/add-url';
 import PageTitle from '@/components/page-title';
 import SheetMenu from '@/components/sheet-menu';
-import { Skeleton } from '@/components/ui/skeleton';
 import { ModeToggle } from '@/components/mode-toggle';
 import {
   Tooltip,
@@ -11,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from './ui/tooltip';
+import { signOutAction } from "@/actions/sign-out";
 
 const Navbar = () => {
   return (
@@ -27,12 +26,9 @@ const Navbar = () => {
             <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
                 <div>
-                  <ClerkLoading>
-                    <Skeleton className='h-8 w-8 rounded-full' />
-                  </ClerkLoading>
-                  <ClerkLoaded>
-                    <UserButton afterSignOutUrl='/sign-in' />
-                  </ClerkLoaded>
+                  <form action={signOutAction}>
+                    <button>Sign out</button>
+                  </form>
                 </div>
               </TooltipTrigger>
               <TooltipContent side='bottom'>Profile</TooltipContent>

@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import prismadb from '@/lib/prismadb';
 import { notFound } from 'next/navigation';
 
@@ -7,9 +7,9 @@ interface DeviceData {
 }
 
 export const getDeviceHit = async (linkId?: string): Promise<DeviceData[]> => {
-  const { userId } = auth();
+  const session = await auth();
 
-  if (!userId) {
+  if (!session) {
     notFound();
   }
 
@@ -29,7 +29,7 @@ export const getDeviceHit = async (linkId?: string): Promise<DeviceData[]> => {
     where: {
       ...(linkId ? { linkKeyword: link?.keyword } : {}),
       link: {
-        userId: userId
+        userId: session.user?.id
       }
     },
     orderBy: {

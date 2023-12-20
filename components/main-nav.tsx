@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutGrid, List, LogOut, User } from 'lucide-react';
-import { ClerkLoaded, ClerkLoading, SignOutButton, useClerk } from '@clerk/nextjs';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -13,6 +12,8 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
+import { signOut } from '@/auth';
+import { signOutAction } from '@/actions/sign-out';
 
 interface MainNavProps {
   isOpen: boolean | undefined;
@@ -21,7 +22,6 @@ interface MainNavProps {
 const MainNav: React.FC<MainNavProps> = ({ isOpen }) => {
   const pathname = usePathname();
   const router = useRouter()
-  const { signOut } = useClerk();
 
   const routes = [
     {
@@ -82,58 +82,38 @@ const MainNav: React.FC<MainNavProps> = ({ isOpen }) => {
           </li>
         ))}
         <li className='w-full'>
-          <ClerkLoading>
-            <Button variant='ghost' className='w-full justify-start h-10'>
-              <span className={cn(isOpen === false ? '' : 'mr-4')}>
-                <LogOut size={18} />
-              </span>
-              <p
-                className={cn(
-                  'whitespace-nowrap transition-all ease-in-out duration-300',
-                  isOpen === false
-                    ? '-translate-x-96 opacity-0'
-                    : 'translate-x-0 opacity-100'
-                )}
-              >
-                Sign Out
-              </p>
-            </Button>
-          </ClerkLoading>
-          <ClerkLoaded>
-            <SignOutButton>
-              <TooltipProvider disableHoverableContent>
-                <Tooltip delayDuration={100}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant='ghost'
-                      className='w-full justify-start h-10'
-                      onClick={() => signOut(() => router.push("/sign-in"))}
+          <TooltipProvider disableHoverableContent>
+            <Tooltip delayDuration={100}>
+              <TooltipTrigger asChild>
+                <form action={signOutAction}>
+                  <Button
+                    variant='ghost'
+                    className='w-full justify-start h-10'
+                  >
+                    <span className={cn(isOpen === false ? '' : 'mr-4')}>
+                      <LogOut size={18} />
+                    </span>
+                    <p
+                      className={cn(
+                        'whitespace-nowrap transition-all ease-in-out duration-300',
+                        isOpen === false
+                          ? '-translate-x-96 opacity-0'
+                          : 'translate-x-0 opacity-100'
+                      )}
                     >
-                      <span className={cn(isOpen === false ? '' : 'mr-4')}>
-                        <LogOut size={18} />
-                      </span>
-                      <p
-                        className={cn(
-                          'whitespace-nowrap transition-all ease-in-out duration-300',
-                          isOpen === false
-                            ? '-translate-x-96 opacity-0'
-                            : 'translate-x-0 opacity-100'
-                        )}
-                      >
-                        Sign Out
-                      </p>
-                    </Button>
-                  </TooltipTrigger>
-                  {isOpen === false && (
-                    <TooltipContent side='right'>Sign Out</TooltipContent>
-                  )}
-                </Tooltip>
-              </TooltipProvider>
-            </SignOutButton>
-          </ClerkLoaded>
-        </li>
-      </ul>
-    </nav>
+                      Sign Out
+                    </p>
+                  </Button>
+                </form>
+              </TooltipTrigger>
+              {isOpen === false && (
+                <TooltipContent side='right'>Sign Out</TooltipContent>
+              )}
+            </Tooltip>
+          </TooltipProvider>
+      </li>
+    </ul>
+    </nav >
   );
 };
 

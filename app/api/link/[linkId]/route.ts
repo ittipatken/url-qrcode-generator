@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import prismadb from '@/lib/prismadb';
 import { NextResponse } from 'next/server';
 
@@ -7,11 +7,11 @@ export async function PATCH(
   { params }: { params: { linkId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const session = await auth();
     const body = await req.json();
     const { title, keyword, url } = body;
 
-    if (!userId) {
+    if (!session) {
       return NextResponse.json(
         { success: false, error: 'Unauthenticated.' },
         { status: 401 }
@@ -101,9 +101,9 @@ export async function DELETE(
   { params }: { params: { linkId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const session = await auth();
 
-    if (!userId) {
+    if (!session) {
       return NextResponse.json(
         { success: false, error: 'Unauthenticated.' },
         { status: 401 }

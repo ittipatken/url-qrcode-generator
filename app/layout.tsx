@@ -2,11 +2,12 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ClerkProvider } from '@clerk/nextjs';
 
 import ModalProvider from '@/providers/modal-provider';
 import ToastProvider from '@/providers/toast-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
+import { auth } from '@/auth';
+import { SessionProvider } from "next-auth/react"
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
     process.env.APP_URL
       ? `${process.env.APP_URL}`
       : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : `http://localhost:${process.env.PORT || 3000}`
+        ? `https://${process.env.VERCEL_URL}`
+        : `http://localhost:${process.env.PORT || 3000}`
   ),
   title: 'Docchula QR code — Custom Short Link & Analytics',
   description:
@@ -35,22 +36,23 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth()
   return (
-    <ClerkProvider>
-      <html lang='en' suppressHydrationWarning>
-        <body className={inter.className} suppressHydrationWarning>
-          <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-            <ToastProvider />
-            <ModalProvider />
+    <html lang='en'>
+      <body className={inter.className}>
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+          <ToastProvider />
+          <ModalProvider />
+          <SessionProvider session={session}>
             {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

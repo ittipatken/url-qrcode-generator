@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 
 export default async function SetupLayout({
@@ -6,9 +6,9 @@ export default async function SetupLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { userId } = auth();
+  const session = await auth();
 
-  if (!userId) {
+  if (!session) {
     redirect('sign-in');
   }
 

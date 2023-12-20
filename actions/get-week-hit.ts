@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import prismadb from '@/lib/prismadb';
 import { notFound } from 'next/navigation';
 
@@ -8,9 +8,9 @@ interface WeekData {
 }
 
 export const getWeekHit = async (linkId?: string): Promise<WeekData[]> => {
-  const { userId } = auth();
+  const session = await auth();
 
-  if (!userId) {
+  if (!session) {
     notFound();
   }
 
@@ -33,7 +33,7 @@ export const getWeekHit = async (linkId?: string): Promise<WeekData[]> => {
     where: {
       ...(linkId ? { linkKeyword: link?.keyword } : {}),
       link: {
-        userId: userId
+        userId: session.user?.id
       },
       createdAt: {
         lte: today.toISOString(),

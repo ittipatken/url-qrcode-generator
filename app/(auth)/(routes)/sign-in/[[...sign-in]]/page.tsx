@@ -1,5 +1,13 @@
-import { SignIn } from '@clerk/nextjs';
+import { AuthError } from "next-auth";
+import { signIn } from "@/auth";
 
 export default function Page() {
-  return <SignIn />;
+  return (
+    <form action={async () => {
+      "use server"
+      await signIn("google")
+    }}>
+      <button>Sign in</button>
+    </form>
+  )
 }

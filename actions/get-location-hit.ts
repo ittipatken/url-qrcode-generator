@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import prismadb from '@/lib/prismadb';
 import { notFound } from 'next/navigation';
 
@@ -9,9 +9,9 @@ interface LocationData {
 export const getLocationHit = async (
   linkId?: string
 ): Promise<LocationData[]> => {
-  const { userId } = auth();
+  const session = await auth();
 
-  if (!userId) {
+  if (!session) {
     notFound();
   }
 
@@ -32,7 +32,7 @@ export const getLocationHit = async (
     where: {
       ...(linkId ? { linkKeyword: link?.keyword } : {}),
       link: {
-        userId: userId
+        userId: session.user?.id
       }
     },
     _count: {

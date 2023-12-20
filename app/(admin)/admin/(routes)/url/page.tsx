@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import { Link } from '@prisma/client';
 import prismadb from '@/lib/prismadb';
 import { redirect } from 'next/navigation';
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
   const { page, per_page, sort, keyword } = searchParams;
-  const { userId } = auth();
+  const session = await auth();
 
   // Number of items per page
   const limit = typeof per_page === 'string' ? parseInt(per_page) : 10;
@@ -51,7 +51,7 @@ const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
         : { [column]: 'desc' }
       : { createdAt: 'desc' };
 
-  if (!userId) {
+  if (!session) {
     redirect('sign-in');
   }
 
@@ -60,7 +60,7 @@ const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
       skip: offset,
       take: limit,
       where: {
-        userId,
+        userId: session.user?.id,
         OR:
           typeof keyword === 'string'
             ? [
@@ -81,7 +81,7 @@ const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
     }),
     prismadb.link.count({
       where: {
-        userId,
+        userId: session.user?.id,
         OR:
           typeof keyword === 'string'
             ? [

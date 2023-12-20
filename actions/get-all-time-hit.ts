@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
-import { auth } from '@clerk/nextjs';
 import prismadb from '@/lib/prismadb';
 import { notFound } from 'next/navigation';
+import { auth } from '@/auth';
 
 interface AllTimeData {
   [index: number]: string | number;
@@ -10,9 +10,9 @@ interface AllTimeData {
 export const getAllTimeHit = async (
   linkId?: string
 ): Promise<AllTimeData[]> => {
-  const { userId } = auth();
+  const session = await auth();
 
-  if (!userId) {
+  if (!session) {
     notFound();
   }
 
@@ -32,7 +32,7 @@ export const getAllTimeHit = async (
     where: {
       ...(linkId ? { linkKeyword: link?.keyword } : {}),
       link: {
-        userId: userId
+        userId: session.user?.id
       }
     },
     orderBy: {

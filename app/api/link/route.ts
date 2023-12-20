@@ -1,11 +1,11 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@/auth';
 import { NextResponse } from 'next/server';
 
 import prismadb from '@/lib/prismadb';
 
 export async function POST(req: Request) {
   try {
-    const { userId } = auth();
+    const session = await auth();
     const body = await req.json();
     const { url, keyword } = body;
 
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     let title = req.headers.get('long-url-title') ?? url;
     title = decodeURI(title);
 
-    if (!userId) {
+    if (!session) {
       return NextResponse.json(
         { success: false, error: 'Unauthenticated.' },
         { status: 401 }
@@ -52,10 +52,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
     const link = await prismadb.link.create({
       data: {
-        userId,
+        userId: session.user?.id || '',
         title,
         keyword,
         url,
@@ -75,9 +74,9 @@ export async function POST(req: Request) {
 
 export async function GET(_req: Request) {
   try {
-    const { userId } = auth();
+    const session = await auth();
 
-    if (!userId) {
+    if (!session) {
       return NextResponse.json(
         { success: false, error: 'Unauthenticated.' },
         { status: 401 }
@@ -86,7 +85,7 @@ export async function GET(_req: Request) {
 
     const links = await prismadb.link.findMany({
       where: {
-        userId
+        userId: session.user?.id
       }
     });
 
