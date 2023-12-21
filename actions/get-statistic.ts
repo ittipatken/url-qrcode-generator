@@ -21,19 +21,19 @@ export const getStatistic = async (): Promise<StatisticData> => {
     [
       prismadb.link.count({
         where: {
-          userId: session.user?.id
+          userId: session?.user?.id
         }
       }),
       prismadb.log.count({
         where: {
           link: {
-            userId: session.user?.id
+            userId: session?.user?.id
           }
         }
       }),
       prismadb.link.findFirst({
         where: {
-          userId: session.user?.id
+          userId: session?.user?.id
         },
         orderBy: {
           click: 'desc'
@@ -44,7 +44,7 @@ export const getStatistic = async (): Promise<StatisticData> => {
         by: ['countryCode'],
         where: {
           link: {
-            userId: session.user?.id
+            userId: session?.user?.id
           }
         },
         _count: {

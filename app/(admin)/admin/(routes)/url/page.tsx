@@ -60,7 +60,7 @@ const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
       skip: offset,
       take: limit,
       where: {
-        userId: session.user?.id,
+        userId: session?.user?.id,
         OR:
           typeof keyword === 'string'
             ? [
@@ -81,7 +81,7 @@ const UrlPage: React.FC<UrlPageProps> = async ({ searchParams }) => {
     }),
     prismadb.link.count({
       where: {
-        userId: session.user?.id,
+        userId: session?.user?.id,
         OR:
           typeof keyword === 'string'
             ? [

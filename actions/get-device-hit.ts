@@ -29,7 +29,7 @@ export const getDeviceHit = async (linkId?: string): Promise<DeviceData[]> => {
     where: {
       ...(linkId ? { linkKeyword: link?.keyword } : {}),
       link: {
-        userId: session.user?.id
+        userId: session?.user?.id
       }
     },
     orderBy: {

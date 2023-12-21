@@ -9,7 +9,7 @@ export const getLink = async (linkId: string) => {
     const link = await prismadb.link.findUnique({
       where: {
         id: linkId,
-        userId: session.user?.id,
+        userId: session?.user?.id,
       },
     });
 

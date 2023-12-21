@@ -32,7 +32,7 @@ export const getLocationHit = async (
     where: {
       ...(linkId ? { linkKeyword: link?.keyword } : {}),
       link: {
-        userId: session.user?.id
+        userId: session?.user?.id
       }
     },
     _count: {

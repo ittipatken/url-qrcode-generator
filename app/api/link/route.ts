@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     }
     const link = await prismadb.link.create({
       data: {
-        userId: session.user?.id || '',
+        userId: session?.user?.id || '',
         title,
         keyword,
         url,
@@ -85,7 +85,7 @@ export async function GET(_req: Request) {
 
     const links = await prismadb.link.findMany({
       where: {
-        userId: session.user?.id
+        userId: session?.user?.id
       }
     });
 
