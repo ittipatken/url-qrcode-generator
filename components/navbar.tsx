@@ -1,4 +1,3 @@
-import { signOut } from "@/auth"
 import AddUrl from '@/components/add-url';
 import PageTitle from '@/components/page-title';
 import SheetMenu from '@/components/sheet-menu';

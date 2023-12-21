@@ -12,7 +12,6 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
-import { signOut } from '@/auth';
 import { signOutAction } from '@/actions/sign-out';
 
 interface MainNavProps {
