@@ -12,13 +12,7 @@ import { SessionProvider } from "next-auth/react"
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.APP_URL
-      ? `${process.env.APP_URL}`
-      : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : `http://localhost:${process.env.PORT || 3000}`
-  ),
+  metadataBase: new URL(`${process.env.APP_URL}`),
   title: 'Docchula QR code — Custom Short Link & Analytics',
   description:
     'Docchula QR code is a free tool to shorten URLs and generate short links. Docchula QR code allow users to create custom keyword shortened link making it easy to share.',
